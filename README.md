@@ -61,24 +61,24 @@ O projeto é dividido em duas partes principais:
    spring.jpa.show-sql=true
 
 ###Referencia: 
-https://github.com/githubjdev/crud-completo-com-spring-boot-rest-api  e  https://github.com/alura-cursos/3356-java-screenmatch-web
+**https://github.com/githubjdev/crud-completo-com-spring-boot-rest-api  e  https://github.com/alura-cursos/3356-java-screenmatch-web**
 
 ### Pré-requisitos
 
-Java 17+ 
+**Java 17+ **
 
-PostgreSQL (banco de dados)
+**PostgreSQL (banco de dados)**
 
-pgAdmin 
+**pgAdmin** 
 
-Maven 
+**Maven** 
 
-IDE: IntelliJ IDEA o
+**IDE: IntelliJ IDEA**
 
-Spring Initializr (para baixar as dependências)
+**Spring Initializr (para baixar as dependências)**
 
 ###Requisitos:
-implementados ou parcialmente:
+**implementados ou parcialmente:**
 RF01: Cadastro de clientes com os seguintes campos
 RF02: O sistema deve permitir a edição dos dados de um cliente cadastrado;
 RF03: O sistema deve permitir a exclusão de um cliente cadastrado;
