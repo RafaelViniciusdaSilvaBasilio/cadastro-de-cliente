@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente e Contato</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <style type="text/css">
+        html {
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-top: 5%;
+        }
+    </style>
+</head>
+
+<body>
+
+<h3> Cadastro de Cliente e Contato </h3>
+
+<h4> Cliente</h4>
+
+<!-- Formulário de cadastro de cliente -->
+<form action="" id="formCadastroUser">
+    <div class="mb-3">
+        <label for="id" class="form-label">ID</label>
+        <input type="text" class="form-control" id="id" readonly="readonly">
+    </div>
+
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome do cliente</label>
+        <input type="text" class="form-control" id="nome" placeholder="Informe o nome" required="required">
+    </div>
+
+    <div class="mb-3">
+        <label for="cpf" class="form-label">CPF</label>
+        <input type="text" class="form-control" id="cpf" placeholder="Informe o CPF" required="required"
+               pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato: xxx.xxx.xxx-xx">
+    </div>
+
+    <div class="mb-3">
+        <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+        <input type="date" class="form-control" id="data_nascimento">
+    </div>
+
+    <div class="mb-3">
+        <label for="endereco" class="form-label">Endereço</label>
+        <input type="text" class="form-control" id="endereco">
+    </div>
+
+    <!-- Formulário de cadastro de contato -->
+    <h4>Cadastro de Contato</h4>
+
+    <div class="mb-3">
+        <label for="tipoContato" class="form-label">Tipo de Contato</label>
+        <input type="text" class="form-control" id="tipoContato" placeholder="Informe o Telefone ou e-mail" required="required">
+    </div>
+
+    <div class="mb-3">
+        <label for="valorContato" class="form-label">Valor do Contato</label>
+        <input type="text" class="form-control" id="valorContato" placeholder="Informe o número ou e-mail" required="required">
+    </div>
+
+    <div class="mb-3">
+        <label for="observacao" class="form-label">Observação</label>
+        <input type="text" class="form-control" id="observacao" placeholder="Informe observação">
+    </div>
+
+</form>
+
+<!-- Botões de Ação -->
+<button type="button" class="btn btn-primary" onclick="salvarUsuario()">Salvar</button>
+<button type="button" class="btn btn-secondary" onclick="document.getElementById('formCadastroUser').reset();">Novo</button>
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalPesquisarUser">Pesquisar</button>
+<button type="button" class="btn btn-warning" onclick="botaoDeletarDaTela();">Deletar</button>
+
+<!-- Modal de Pesquisa de Usuário -->
+<div class="modal fade" id="modalPesquisarUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pesquisa de usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="nameBusca" class="col-form-label">Informe o nome:</label>
+                        <input type="text" class="form-control" id="nameBusca">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cpfBusca" class="col-form-label">Informe o CPF:</label>
+                        <input type="text" class="form-control" id="cpfBusca" placeholder="Digite o CPF">
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="pesquisarUser()">Buscar</button>
+                </form>
+
+                <div style="height: 300px;overflow: scroll;">
+                    <table class="table" id="tabelaresultados">
+                        <thead>
+                        <tr>
+                            <th scope="column">ID</th>
+                            <th scope="column">Nome</th>
+                            <th scope="column">Editar</th>
+                            <th scope="column">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function botaoDeletarDaTela(){
+        var id = $('#id').val();
+        if(id != null && id.trim() != ''){
+            deleteUser(id);
+            document.getElementById('formCadastroUser').reset();
+        }
+    }
+
+    function deleteUser(id){
+        if(confirm('Deseja realmente deletar?')) {
+            $.ajax({
+                method : "DELETE",
+                url : "delete",
+                data : "iduser=" + id ,
+                success : function(response) {
+                    $('#'+ id).remove();
+                    alert(response);
+                }
+            }).fail(function(xhr, status, errorThrown) {
+                alert("Erro ao deletar usuario por id: " + xhr.responseText);
+            });
+        }
+    }
+
+    function pesquisarUser() {
+        var nome = $('#nameBusca').val().trim();
+        var cpf = $('#cpfBusca').val().trim();
+
+        if (nome === "" && cpf === "") {
+            alert("Digite um Nome ou CPF para pesquisar!");
+            return;
+        }
+
+        $.ajax({
+            method: "GET",
+            url: "/clientes/buscar",
+            data: { nome: nome, cpf: cpf },
+            dataType: "json",
+            success: function (response) {
+                $('#tabelaresultados > tbody').empty();
+
+                if (!Array.isArray(response) && response.id) {
+                    response = [response];
+                }
+
+                if (response.length === 0) {
+                    alert("Nenhum cliente encontrado.");
+                    return;
+                }
+
+                response.forEach(function (cliente) {
+                    $('#tabelaresultados > tbody').append(
+                        `<tr id="${cliente.id}">
+                            <td>${cliente.id}</td>
+                            <td>${cliente.nome}</td>
+                            <td><button type="button" onclick="colocarEmEdicao(${cliente.id})" class="btn btn-primary">Ver</button></td>
+                            <td><button type="button" class="btn btn-danger" onclick="deleteUser(${cliente.id})">Delete</button></td>
+                        </tr>`
+                    );
+                });
+            }
+        }).fail(function (xhr) {
+            alert("Erro ao buscar cliente: " + xhr.responseText);
+        });
+    }
+
+    function colocarEmEdicao(id) {
+        $.ajax({
+            method : "GET",
+            url : "buscaruserid",
+            data : "iduser=" + id ,
+            success : function(response) {
+                $("#id").val(response.id);
+                $("#nome").val(response.nome);
+                $("#cpf").val(response.cpf);
+                $("#data_nascimento").val(response.dataNascimento);
+                $("#endereco").val(response.endereco);
+                $('#modalPesquisarUser').modal('hide');
+            }
+        }).fail(function(xhr, status, errorThrown) {
+            alert("Erro ao buscar usuario por id: " + xhr.responseText);
+        });
+    }
+
+    function salvarUsuario() {
+        var id = $("#id").val();
+        var nome = $("#nome").val();
+        var cpf = $("#cpf").val();
+        var dataNascimento = $("#data_nascimento").val();
+        var endereco = $("#endereco").val();
+        var tipoContato = $("#tipoContato").val();
+        var valorContato = $("#valorContato").val();
+        var observacao = $("#observacao").val();
+
+        var data = {
+            id: id,
+            nome: nome,
+            cpf: cpf,
+            dataNascimento: dataNascimento,
+            endereco: endereco,
+            tipoContato: tipoContato,
+            valorContato: valorContato,
+            observacao: observacao
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/clientes/salvar",
+            data: data,
+            success: function(response) {
+                alert(response);
+                $('#formCadastroUser').reset();
+            },
+            error: function(xhr, status, error) {
+                alert("Erro ao salvar cliente: " + xhr.responseText);
+            }
+        });
+    }
+</script>
+</body>
+</html>
