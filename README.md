@@ -60,7 +60,7 @@ O projeto é dividido em duas partes principais:
    spring.jpa.properties.hibernate.format_sql=true
    spring.jpa.show-sql=true
 
-###Referencia: 
+**Referencia**: 
 **https://github.com/githubjdev/crud-completo-com-spring-boot-rest-api  e  https://github.com/alura-cursos/3356-java-screenmatch-web**
 
 ### Pré-requisitos
@@ -77,8 +77,9 @@ O projeto é dividido em duas partes principais:
 
 **Spring Initializr (para baixar as dependências)**
 
-###Requisitos:
+**Requisitos:**
 **implementados ou parcialmente:**
+
 RF01: Cadastro de clientes com os seguintes campos
 RF02: O sistema deve permitir a edição dos dados de um cliente cadastrado;
 RF03: O sistema deve permitir a exclusão de um cliente cadastrado;
